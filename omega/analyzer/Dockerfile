@@ -7,7 +7,7 @@ LABEL maintainer="Open Source Security Foundation - Omega"
 LABEL vendor="OpenSSF"
 
 LABEL build-date="2023-05-31T00:00:00.00Z"
-LABEL version="0.8.6"
+LABEL version="0.8.6-2"
 
 # Overridable Arguments
 ARG DOTNET_VERSION="6.0"
@@ -394,8 +394,12 @@ ADD worker/tools/parse_purl.py /opt/toolshed/
 ADD worker/tools/edit_distance.py /opt/toolshed/
 ADD worker/tools/postprocess.py /opt/toolshed/
 ADD worker/tools/etc/* /opt/toolshed/etc/
+ADD worker/tools/automate.sh /opt/toolshed/
 
 RUN dos2unix /opt/toolshed/runtools.sh && \
     chmod +x /opt/toolshed/runtools.sh
 
-ENTRYPOINT ["/opt/toolshed/runtools.sh"]
+RUN dos2unix /opt/toolshed/automate.sh && \
+    chmod +x /opt/toolshed/automate.sh
+
+ENTRYPOINT ["/opt/toolshed/automate.sh"]
