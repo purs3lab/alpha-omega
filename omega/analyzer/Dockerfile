@@ -394,12 +394,12 @@ ADD worker/tools/parse_purl.py /opt/toolshed/
 ADD worker/tools/edit_distance.py /opt/toolshed/
 ADD worker/tools/postprocess.py /opt/toolshed/
 ADD worker/tools/etc/* /opt/toolshed/etc/
-ADD worker/tools/automate.sh /opt/toolshed/
+ADD worker/tools/github.sh /opt/toolshed/
 
 RUN dos2unix /opt/toolshed/runtools.sh && \
     chmod +x /opt/toolshed/runtools.sh
 
-RUN dos2unix /opt/toolshed/automate.sh && \
-    chmod +x /opt/toolshed/automate.sh
+RUN dos2unix /opt/toolshed/github.sh && \
+    chmod +x /opt/toolshed/github.sh
 
-ENTRYPOINT ["/opt/toolshed/automate.sh"]
+ENTRYPOINT ["/opt/toolshed/github.sh"]
