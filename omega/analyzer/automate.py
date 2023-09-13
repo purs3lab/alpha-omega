@@ -18,7 +18,7 @@ def analyze():
                 continue
 
             print(f'[{i + 1}/{len(lines)}] Analyzing {user}/{repo}...')
-            rc = os.system(f'docker run --rm -it -v ./results:/opt/export/github openssf/omega-toolshed:0.8.6-2 {user} {repo}')
+            rc = os.system(f'docker run --rm -it -v ./results:/opt/export/github openssf/omega-toolshed:latest {user} {repo}')
             if rc:
                 print("Analyzer exited with code 1. Exiting script...")
                 return
