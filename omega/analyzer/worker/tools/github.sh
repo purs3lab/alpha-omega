@@ -7,7 +7,6 @@ then
 fi
 
 mkdir /opt/local_source
-git clone https://github.com/$1/$2 /tmp/$2 || exit 1
-VERSION=$(git --git-dir=/tmp/$2/.git rev-parse --short HEAD)
-tar -czf /opt/local_source/$2.tar.gz /tmp/$2
+git clone https://github.com/$1/$2 /opt/local_source/$2 || exit 1
+VERSION=$(git --git-dir=/opt/local_source/$2/.git rev-parse --short HEAD)
 /opt/toolshed/runtools.sh pkg:github/$1/$2@$VERSION?local_source=true || exit 1
