@@ -602,7 +602,7 @@ LANGUAGES=()
 
 for LANGUAGE in "${LANGUAGES[@]}"; do
     QUERY_ROOT="/opt/codeql-queries"
-    CODEQL_SUITES=("$QUERY_ROOT/$LANGUAGE/ql/src/codeql-suites/$LANGUAGE-security-extended.qls")
+    CODEQL_SUITES=("$QUERY_ROOT/$LANGUAGE/ql/src/codeql-suites/$LANGUAGE-security-and-quality.qls")
 
     if [ -f "$QUERY_ROOT/$LANGUAGE/ql/src/codeql-suites/solorigate.qls" ]; then
         CODEQL_SUITES+=("$QUERY_ROOT/$LANGUAGE/ql/src/codeql-suites/solorigate.qls")
