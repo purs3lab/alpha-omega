@@ -1,0 +1,38 @@
+name: Run Omega Analyzer
+
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          path: target
+
+      - name: Checkout Omega Analyzer
+        uses: actions/checkout@v4
+        with:
+          repository: purs3lab/alpha-omega
+          path: alpha-omega
+          ref: workflow
+          sparse-checkout: |
+            omega/analyzer
+
+      - name: Build container
+        run: |
+          cd ./alpha-omega/omega/analyzer
+          ./build.sh
+
+      - name: Run analyzer
+        run: |
+          docker run --rm -it -v ./results:/opt/export/github/target/0 -v ./target:/opt/local_source/target openssf/omega-toolshed:latest
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: results
+          path: ./results
+
