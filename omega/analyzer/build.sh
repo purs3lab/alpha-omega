@@ -27,12 +27,13 @@ function main {
 	[ $? -eq 1 ] && echo "err: could not force build docker container"
     else
 	docker build -t openssf/omega-toolshed:$version . -f Dockerfile
-	[ $? -eq 1 ] && echo "err: could not build docker container"
+	[ $? -eq 1 ] && echo "err: could not build docker container" && exit 1
     fi
     
     docker tag openssf/omega-toolshed:$version openssf/omega-toolshed:latest
-    [ $? -eq 1 ] && echo "err: unsuccessful in tagging container"
+    [ $? -eq 1 ] && echo "err: unsuccessful in tagging container" && exit 1
 
+  exit 0
 }
 
 while getopts 'hf' opt; do
