@@ -3,7 +3,7 @@ name: Run Omega Analyzer
 on: push
 
 jobs:
-  build:
+  analyze:
     runs-on: ubuntu-latest
 
     steps:
@@ -28,7 +28,7 @@ jobs:
 
       - name: Run analyzer
         run: |
-          docker run --rm -it -v ./results:/opt/export/github/target/0 -v ./target:/opt/local_source/target openssf/omega-toolshed:latest
+          docker run --rm -v ./results:/opt/export/github/target/0 -v ./target:/opt/local_source/target openssf/omega-toolshed:latest
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
