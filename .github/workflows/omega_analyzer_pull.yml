@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       user:
-        desciption: 'GitHub username'
+        description: 'GitHub username'
         required: true
 
       repository:
