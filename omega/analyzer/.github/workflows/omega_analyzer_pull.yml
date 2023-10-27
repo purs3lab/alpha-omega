@@ -1,0 +1,37 @@
+name: Run Omega Analyzer
+
+on:
+  workflow_dispatch:
+    inputs:
+      user:
+        desciption: 'GitHub username'
+        required: true
+
+      repository:
+        description: 'Github repository name'
+        required: true
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ inputs.user }}/${{ inputs.repository }}
+          path: target
+
+      - name: Pull docker image
+        run: docker pull meme8383/omega-toolshed:latest
+
+      - name: Run analyzer
+        run: |
+          docker run --rm -v ./results:/opt/export/github/target/0 -v ./target:/opt/local_source/target meme8383/omega-toolshed:latest
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: results
+          path: ./results
+
