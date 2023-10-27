@@ -1,13 +1,15 @@
 name: Run Omega Analyzer
 
-inputs:
-  user:
-    description: 'GitHub username'
-    required: true
+on:
+  workflow_dispatch:
+    inputs:
+      user:
+        desciption: 'GitHub username'
+        required: true
 
-  repository:
-    description: 'GitHub repository name'
-    required: true
+      repository:
+        description: 'Github repository name'
+        required: true
 
 jobs:
   analyze:

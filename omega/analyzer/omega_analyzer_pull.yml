@@ -1,13 +1,15 @@
 name: Run Omega Analyzer
 
-inputs:
-  user:
-    desciption: 'GitHub username'
-    required: true
+on:
+  workflow_dispatch:
+    inputs:
+      user:
+        desciption: 'GitHub username'
+        required: true
 
-  repository:
-    description: 'Github repository name'
-    required: true
+      repository:
+        description: 'Github repository name'
+        required: true
 
 jobs:
   analyze:
@@ -17,7 +19,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          repository: ${{ inputs.uer }}/${{ inputs.repository }}
+          repository: ${{ inputs.user }}/${{ inputs.repository }}
           path: target
 
       - name: Pull docker image
