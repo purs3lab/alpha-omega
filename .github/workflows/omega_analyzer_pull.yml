@@ -1,4 +1,5 @@
-name: Run Omega Analyzer (${{ inputs.user }}/${{ inputs.repository }})
+name: Run Omega Analyzer 
+run-name: ${{ inputs.user }}/${{ inputs.repository }}
 
 on:
   workflow_dispatch:
