@@ -1,4 +1,4 @@
-name: Run Omega Analyzer
+name: Run Omega Analyzer (Rebuild Image)
 
 on:
   workflow_dispatch:
@@ -13,7 +13,7 @@ on:
 
 jobs:
   analyze:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
       - name: Checkout repository
