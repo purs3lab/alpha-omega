@@ -2,7 +2,7 @@ import requests
 import re
 
 # Replace this with your GitHub token
-GITHUB_TOKEN = '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'
+GITHUB_TOKEN = 'YOUR_GITHUB_TOKEN'
 
 # Path to your file containing GitHub repository URLs
 github_repos_file = 'github_repos.txt'
