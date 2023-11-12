@@ -32,6 +32,6 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
-          name: results
+          name: results-${{ inputs.user }}-${{ inputs.repository }}
           path: ./results
 
