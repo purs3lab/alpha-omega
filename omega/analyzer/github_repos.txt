@@ -8,7 +8,6 @@ https://github.com/apache/airflow
 https://github.com/appneta/tcpreplay
 https://github.com/argoproj/argo-cd
 https://github.com/ARMmbed/mbedtls
-https://github.com/AvaterXXX/CVEs
 https://github.com/axiomatic-systems/Bento4
 https://github.com/azure-rtos/usbx
 https://github.com/backstage/backstage

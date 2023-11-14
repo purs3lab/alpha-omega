@@ -32,6 +32,8 @@ def fetch_active_runs():
     if response.status_code == 200:
         for run in response.json()['workflow_runs']:
             if run['status'] in ['completed', 'in_progress', 'queued']:
+                if run['status'] == 'completed' and run['conclusion'] != 'success':
+                    continue
                 # Assuming the workflow run name includes the repository name
                 name = run['name']
                 active_runs.add(name)
