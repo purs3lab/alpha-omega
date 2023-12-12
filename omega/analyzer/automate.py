@@ -44,7 +44,7 @@ def download_artifact(run_id):
         download_url = artifact['archive_download_url']
         print(f'Downloading artifact from {download_url}')
         download_response = requests.get(download_url, headers=headers)
-        with open(f'./workflow_results/{artifact["name"]}.zip', 'wb') as file:
+        with open(f'/workdisk/POSSE/workflow_results/{artifact["name"]}.zip', 'wb') as file:
             file.write(download_response.content)
         return artifact['id']
     else:
@@ -55,7 +55,7 @@ def delete_artifact(artifact_id):
     url = f'https://api.github.com/repos/purs3lab/alpha-omega/actions/artifacts/{artifact_id}'
     response = requests.delete(url, headers=headers)
     if response.status_code == 204:
-        print(f'Deleted workflow run {run_id} successfully.')
+        print(f'Deleted artifact {artifact_id} successfully.')
 
 # Function to trigger the workflow
 def trigger_workflow(user, repo):
@@ -99,4 +99,3 @@ with open(github_repos_file, 'r') as file:
                     count += 1
             else:
                 print(f'Invalid GitHub URL: {repo_url}')
-
