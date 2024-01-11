@@ -3,6 +3,7 @@ import re
 import argparse
 import time
 import os
+import threading
 
 GITHUB_TOKEN = 'YOUR_GITHUB_TOKEN'
 github_repos_file = 'github_repos.txt'
@@ -19,19 +20,6 @@ parser = argparse.ArgumentParser(description="Trigger and manage GitHub workflow
 parser.add_argument("-l", "--limit", type=int, default=0, help="Limit the number of repositories to process (0 for no limit)")
 args = parser.parse_args()
 
-# Function to wait for workflow completion
-#def wait_for_workflow_completion(user, repo):
-#    print(f'Waiting for workflow completion for {user}/{repo}...')
-#    while True:
-#        url = 'https://api.github.com/repos/purs3lab/alpha-omega/actions/runs'
-#        response = requests.get(url, headers=headers)
-#        if response.status_code == 200:
-#            runs = response.json()['workflow_runs']
-#            for run in runs:
-#                if run['status'] == 'completed' and run['name'] == f'{user}/{repo}':
-#                    return run['id']
-#        time.sleep(60)  # Wait for 60 seconds before checking again
-
 def num_of_queued_wf_runs():
     url = 'https://api.github.com/repos/purs3lab/alpha-omega/actions/runs'
     response = requests.get(url, headers=headers, params={'status': 'queued'})
@@ -41,14 +29,16 @@ def num_of_queued_wf_runs():
 
 # Download artifacts of successful workflow runs
 def download_results():
-    url = 'https://api.github.com/repos/purs3lab/alpha-omega/actions/runs'
-    response = requests.get(url, headers=headers, params={'status': 'success'})
-    if response.status_code == 200:
-        runs = response.json()['workflow_runs']
-        for run in runs:
-            run_id = run['id']
-            download_artifact(run_id)
-            delete_workflow_run(run_id)
+    while True:
+        url = 'https://api.github.com/repos/purs3lab/alpha-omega/actions/runs'
+        response = requests.get(url, headers=headers, params={'status': 'success'})
+        if response.status_code == 200:
+            runs = response.json()['workflow_runs']
+            for run in runs:
+                run_id = run['id']
+                download_artifact(run_id)
+                delete_workflow_run(run_id)
+        time.sleep(60)  # Wait for 60 seconds before checking again
 
 # Function to download workflow artifact
 def download_artifact(run_id):
@@ -132,9 +122,11 @@ def get_github_repos():
             yield user, repo
 
 # Main loop to run the workflow for each repository URL in the file
+downloader = threading.Thread(target=download_results)
+downloader.start()
+
 github_repos = get_github_repos()
 while True:
-    download_results()
     nr_queued = num_of_queued_wf_runs()
     if nr_queued != -1 and nr_queued < 1:
         try:
