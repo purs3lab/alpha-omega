@@ -38,3 +38,9 @@ jobs:
           name: results-${{ inputs.user }}-${{ inputs.repository }}
           path: ./results
 
+      - name: Cleanup
+        if: always()
+        run: |
+          rm -rf ./results
+          docker stop $(docker ps -q) || true
+          docker rm $(docker ps -aq) || true
