@@ -29,6 +29,7 @@ jobs:
 
       - name: Run analyzer
         run: |
+          docker rm -f $(docker ps -aq) || true
           rm -rf "$PWD/results"
           docker run --rm -v "$PWD/results":/opt/export/github/target/0 -v "$PWD/target":/opt/local_source/target meme8383/omega-toolshed:latest
 
@@ -41,6 +42,5 @@ jobs:
       - name: Cleanup
         if: always()
         run: |
+          docker rm -f $(docker ps -aq) || true
           rm -rf ./results
-          docker stop $(docker ps -q) || true
-          docker rm $(docker ps -aq) || true
