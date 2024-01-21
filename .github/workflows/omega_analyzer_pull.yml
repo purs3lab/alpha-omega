@@ -31,7 +31,10 @@ jobs:
         run: |
           docker rm -f $(docker ps -aq) || true
           rm -rf "$PWD/results"
-          docker run --rm -v "$PWD/results":/opt/export/github/target/0 -v "$PWD/target":/opt/local_source/target meme8383/omega-toolshed:latest
+          # Sometimes operating system's OOM killer does not do its work,
+          # making the entire machine unresponsive.
+          # We limit the memory usage of container to 30g here.
+          docker run --rm -m 30g -v "$PWD/results":/opt/export/github/target/0 -v "$PWD/target":/opt/local_source/target meme8383/omega-toolshed:latest
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
